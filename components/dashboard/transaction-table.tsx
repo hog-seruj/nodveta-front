@@ -46,8 +46,15 @@ export function TransactionTable({ transactions }: TransactionTableProps) {
     "all",
   );
 
-  // TODO: Filter transactions by statusFilter before rendering rows.
-  const visibleTransactions = useMemo(() => transactions, [transactions]);
+  const visibleTransactions = useMemo(() => {
+    if (statusFilter === "all") {
+      return transactions;
+    }
+
+    return transactions.filter(
+      (transaction) => transaction.status === statusFilter,
+    );
+  }, [statusFilter, transactions]);
 
   return (
     <div className="overflow-x-auto">
@@ -56,6 +63,7 @@ export function TransactionTable({ transactions }: TransactionTableProps) {
           Showing {visibleTransactions.length} transactions
         </p>
         <select
+          aria-label="Filter transactions by status"
           className="rounded border border-slate-300 px-2 py-1 text-sm"
           value={statusFilter}
           onChange={(event) =>
