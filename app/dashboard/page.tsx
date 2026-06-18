@@ -21,15 +21,13 @@ export default function DashboardPage() {
           </p>
         </div>
 
-        {/* TODO: Use responsive grid classes — e.g. 1 col mobile, 2 col tablet, 4 col desktop */}
-        <section className="grid grid-cols-4 gap-4">
+        <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
           {metrics.map((metric) => (
             <MetricCard key={metric.id} metric={metric} />
           ))}
         </section>
 
-        {/* TODO: Stack these sections on smaller screens */}
-        <section id="analytics" className="grid grid-cols-2 gap-6">
+        <section id="analytics" className="grid grid-cols-1 gap-6 lg:grid-cols-2">
           <Card>
             <CardHeader
               title="Request Volume"
