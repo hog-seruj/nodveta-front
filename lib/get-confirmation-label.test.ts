@@ -24,5 +24,9 @@ describe("getConfirmationLabel", () => {
     ).toBe("Pending");
   });
 
-  it.todo("returns Failed for failed transactions regardless of confirmation count");
+  it("returns Failed for failed transactions regardless of confirmation count", () => {
+    expect(
+      getConfirmationLabel({ ...baseTransaction, status: "failed", confirmations: 24 }),
+    ).toBe("Failed");
+  });
 });
