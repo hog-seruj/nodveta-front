@@ -4,31 +4,37 @@ import { SystemStatus } from "@/components/dashboard/system-status";
 import { TransactionTable } from "@/components/dashboard/transaction-table";
 import { AppShell } from "@/components/layout/app-shell";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { cn } from "@/lib/cn";
 import { mockDashboardData } from "@/data/mock-dashboard";
+import { motionEnter } from "@/lib/motion";
+import styles from "./dashboard.module.css";
 
 export default function DashboardPage() {
   const { metrics, transactions, nodes, requestVolume } = mockDashboardData;
 
   return (
     <AppShell>
-      <div className="space-y-6">
-        <div>
-          <h1 className="text-2xl font-bold text-slate-900">
-            Infrastructure Dashboard
-          </h1>
-          <p className="mt-1 text-slate-500">
+      <div className={styles.page}>
+        <div className={cn(styles.header, motionEnter("animatecss-fadeIn"))}>
+          <h1 className={styles.title}>Infrastructure Dashboard</h1>
+          <p className={styles.subtitle}>
             Monitor network health, transactions, and node performance.
           </p>
         </div>
 
-        <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-          {metrics.map((metric) => (
-            <MetricCard key={metric.id} metric={metric} />
+        <section className={styles.metricsGrid}>
+          {metrics.map((metric, index) => (
+            <MetricCard key={metric.id} metric={metric} index={index} />
           ))}
         </section>
 
-        <section id="analytics" className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-          <Card>
+        <section id="analytics" className={styles.analyticsGrid}>
+          <Card
+            className={cn(
+              styles.cardAnimated,
+              motionEnter("animatecss-fadeInLeft", 1),
+            )}
+          >
             <CardHeader
               title="Request Volume"
               description="Hourly API requests across all regions"
@@ -39,7 +45,12 @@ export default function DashboardPage() {
           </Card>
 
           <section id="nodes">
-            <Card>
+            <Card
+              className={cn(
+                styles.cardAnimated,
+                motionEnter("animatecss-fadeInRight", 2),
+              )}
+            >
               <CardHeader
                 title="System Status"
                 description="Validator node health by region"
@@ -52,7 +63,12 @@ export default function DashboardPage() {
         </section>
 
         <section id="transactions">
-          <Card>
+          <Card
+            className={cn(
+              styles.cardAnimated,
+              motionEnter("animatecss-fadeInUp", 3),
+            )}
+          >
             <CardHeader
               title="Recent Transactions"
               description="Latest on-chain activity across Nodveta networks"

@@ -4,6 +4,9 @@ const config: Config = {
   content: [
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.module.css",
+    "./components/**/*.module.css",
+    "./lib/**/*.ts",
   ],
   theme: {
     extend: {
@@ -23,11 +26,22 @@ const config: Config = {
     },
   },
   plugins: [
-    require('tailwind-animates')({
-      duration: '1s',
-      delay: '500ms',
-      iterationCount: '1'
-      })
+    require("tailwind-motionkit")({
+      duration: "1s",
+      delay: "500ms",
+      iterationCount: "1",
+      classes: [
+        "fadeIn",
+        "fadeInUp",
+        "fadeInLeft",
+        "fadeInRight",
+        "slideInDown",
+        "slideInUp",
+        "zoomIn",
+        "pulse",
+        "infinite",
+      ],
+    }),
   ],
 };
 

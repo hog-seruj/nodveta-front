@@ -1,10 +1,20 @@
+import { Blocks } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/cn";
+import { motionEnter } from "@/lib/motion";
+import styles from "./header.module.css";
 
 export function Header() {
   return (
-    <header className="flex h-16 shrink-0 items-center justify-between border-b border-slate-200 bg-white px-6">
-      <div className="flex items-center gap-3">
+    <header
+      className={cn(
+        styles.header,
+        motionEnter("animatecss-slideInDown", 0, { fast: true }),
+      )}
+    >
+      <div className={styles.brand}>
         <Image
           src="/logo.png"
           alt="Nodveta"
@@ -13,20 +23,20 @@ export function Header() {
           priority
         />
         <div>
-          <p className="text-sm font-semibold text-slate-900">Nodveta</p>
-          <p className="text-xs text-slate-500">Infrastructure Dashboard</p>
+          <p className={styles.brandName}>Nodveta</p>
+          <p className={styles.brandTagline}>Infrastructure Dashboard</p>
         </div>
       </div>
 
-      <div className="flex items-center gap-4">
-        <span className="hidden text-sm text-slate-500 sm:inline">
+      <div className={styles.actions}>
+        <span className={styles.networkStatus}>
+          <Blocks className={styles.networkIcon} aria-hidden="true" />
           Mainnet · Block #18,429,102
         </span>
-        <Link
-          href="/dashboard"
-          className="rounded-lg bg-nodveta-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-nodveta-700"
-        >
-          Open Dashboard
+        <Link href="/dashboard">
+          <Button size="sm" variant="primary">
+            Open Dashboard
+          </Button>
         </Link>
       </div>
     </header>

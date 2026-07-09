@@ -1,4 +1,7 @@
+import { cn } from "@/lib/cn";
+import { motionEnter } from "@/lib/motion";
 import type { RequestVolumePoint } from "@/types/dashboard";
+import styles from "./request-chart.module.css";
 
 interface RequestChartProps {
   data: RequestVolumePoint[];
@@ -8,27 +11,30 @@ export function RequestChart({ data }: RequestChartProps) {
   const maxRequests = Math.max(...data.map((point) => point.requests));
 
   return (
-    <div className="space-y-4">
-      <div className="flex h-48 items-end gap-3">
-        {data.map((point) => {
+    <div className={styles.root}>
+      <div className={styles.chart}>
+        {data.map((point, index) => {
           const heightPercent = (point.requests / maxRequests) * 100;
 
           return (
             <div
               key={point.hour}
-              className="flex flex-1 flex-col items-center gap-2"
+              className={cn(
+                styles.barColumn,
+                motionEnter("animatecss-slideInUp", index),
+              )}
             >
               <div
-                className="w-full rounded-t bg-nodveta-500"
+                className={styles.bar}
                 style={{ height: `${heightPercent}%`, minHeight: "4px" }}
                 title={`${point.requests.toLocaleString()} requests`}
               />
-              <span className="text-xs text-slate-500">{point.hour}</span>
+              <span className={styles.hourLabel}>{point.hour}</span>
             </div>
           );
         })}
       </div>
-      <p className="text-xs text-slate-400">
+      <p className={styles.caption}>
         Request volume over the last 24 hours (static mock data)
       </p>
     </div>
