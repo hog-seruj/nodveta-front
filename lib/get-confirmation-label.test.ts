@@ -24,9 +24,35 @@ describe("getConfirmationLabel", () => {
     ).toBe("Pending");
   });
 
+  it("returns the confirmation count below the confirmation threshold", () => {
+    expect(
+      getConfirmationLabel({ ...baseTransaction, confirmations: 1 }),
+    ).toBe("1 confirmations");
+
+    expect(
+      getConfirmationLabel({ ...baseTransaction, confirmations: 11 }),
+    ).toBe("11 confirmations");
+  });
+
+  it("returns Confirmed at exactly 12 confirmations", () => {
+    expect(
+      getConfirmationLabel({ ...baseTransaction, confirmations: 12 }),
+    ).toBe("Confirmed");
+  });
+
   it("returns Failed for failed transactions regardless of confirmation count", () => {
     expect(
       getConfirmationLabel({ ...baseTransaction, status: "failed", confirmations: 24 }),
+    ).toBe("Failed");
+  });
+
+  it("returns Failed for failed transactions with zero confirmations", () => {
+    expect(
+      getConfirmationLabel({
+        ...baseTransaction,
+        status: "failed",
+        confirmations: 0,
+      }),
     ).toBe("Failed");
   });
 });
